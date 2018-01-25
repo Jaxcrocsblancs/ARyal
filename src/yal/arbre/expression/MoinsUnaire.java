@@ -17,4 +17,17 @@ public class MoinsUnaire extends Unaire {
         return "- " ;
     }
 
+	@Override
+	public void verifier() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String toMIPS() {
+		StringBuilder res = new StringBuilder();
+		res.append("sub $v0, $v0, "+expression.toMIPS()+" \n");
+		return res.toString();
+	}
+
 }

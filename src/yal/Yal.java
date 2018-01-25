@@ -25,6 +25,10 @@ public class Yal {
             
             arbre.verifier() ; 
             System.out.println(arbre.toMIPS());
+            System.out.println("end : \n");
+            System.out.println("move $v1, $v0 \n");
+            System.out.println("li $v0, 10 \n");
+            System.out.println("syscall \n");
         } 
         catch (FileNotFoundException ex) {
             System.err.println("Fichier " + fichier + " inexistant") ;

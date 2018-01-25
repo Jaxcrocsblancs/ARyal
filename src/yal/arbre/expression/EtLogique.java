@@ -17,4 +17,23 @@ public class EtLogique extends BinaireLogique {
         return " et " ;
     }
 
+	@Override
+	public void verifier() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String toMIPS() {
+		StringBuilder res = new StringBuilder();
+		res.append(gauche.toMIPS() + "\n");
+		res.append("sw $v0, ($sp) \n");
+		res.append("addi $sp, $sp, -4 \n");
+		res.append(droite.toMIPS() + "\n");
+		res.append("addi $sp, $sp, 4 \n");
+		res.append("lw $t8, ($sp) \n");
+		res.append("and $v0, $v0, $t8v \n");
+		return res.toString();
+	}
+
 }
