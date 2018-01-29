@@ -1,6 +1,8 @@
 package yal.arbre.expression;
 
 import yal.arbre.ArbreAbstrait;
+import yal.exceptions.AnalyseSemantiqueException;
+import yal.exceptions.AnalyseSyntaxiqueException;
 
 /**
  * 3 déc. 2015
@@ -21,8 +23,9 @@ public class Different extends Comparaison {
 
 	@Override
 	public void verifier() {
-		// TODO Auto-generated method stub
-		
+		if(gauche.getTypeCste() != "bool" || droite.getTypeCste() != "bool"){
+			throw new AnalyseSemantiqueException("Les deux expressions doivent être de type Boolean");
+		}
 	}
 
 	@Override

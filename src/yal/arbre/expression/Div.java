@@ -1,5 +1,8 @@
 package yal.arbre.expression;
 
+import yal.exceptions.AnalyseSemantiqueException;
+import yal.exceptions.AnalyseSyntaxiqueException;
+
 /**
  * 3 déc. 2015
  *
@@ -19,8 +22,12 @@ public class Div extends BinaireArithmetique {
 
 	@Override
 	public void verifier() {
-		// TODO Auto-generated method stub
-		
+		if(!(gauche.getTypeCste() == "int") || !(droite.getTypeCste() == "int")){
+			throw new AnalyseSemantiqueException("les deux expressions doivents être des entiers");
+		}
+		else if(droite.toString().equals("0")) {
+			throw new AnalyseSemantiqueException("l'expression de droite ne peut pas être 0");
+		}
 	}
 
 	@Override

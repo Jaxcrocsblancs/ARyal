@@ -32,7 +32,7 @@ public class EtLogique extends BinaireLogique {
 		res.append(droite.toMIPS() + "\n");
 		res.append("addi $sp, $sp, 4 \n");
 		res.append("lw $t8, ($sp) \n");
-		res.append("and $v0, $v0, $t8v \n");
+		res.append("and $v0, $v0, $t8 \n");
 		return res.toString();
 	}
 

@@ -1,5 +1,7 @@
 package yal.arbre.expression;
 
+import yal.exceptions.AnalyseSemantiqueException;
+
 /**
  * 3 déc. 2015
  *
@@ -19,8 +21,9 @@ public class OuLogique extends BinaireLogique {
 
 	@Override
 	public void verifier() {
-		// TODO Auto-generated method stub
-		
+		if(gauche.getTypeCste() != "bool" || droite.getTypeCste() != "bool"){
+			throw new AnalyseSemantiqueException("Les deux expressions doivent être de type Boolean");
+		}
 	}
 
 	@Override
@@ -33,7 +36,6 @@ public class OuLogique extends BinaireLogique {
 		res.append("addi $sp, $sp, 4 \n");
 		res.append("lw $t8, ($sp) \n");
 		res.append("or $v0, $v0, $t8 \n");
-		return null;
+		return res.toString();
 	}
-
 }

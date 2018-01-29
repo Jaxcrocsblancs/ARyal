@@ -1,5 +1,7 @@
 package yal.arbre.expression;
 
+import yal.exceptions.AnalyseSemantiqueException;
+
 /**
  * 3 déc. 2015
  *
@@ -19,8 +21,9 @@ public class Moins extends BinaireArithmetique {
 
 	@Override
 	public void verifier() {
-		// TODO Auto-generated method stub
-		
+		if(!(gauche.getTypeCste() == "int") || !(droite.getTypeCste() == "int")){
+			throw new AnalyseSemantiqueException("les deux expressions doivents être des entiers");
+		}
 	}
 
 	@Override

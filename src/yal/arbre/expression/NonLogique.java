@@ -1,5 +1,7 @@
 package yal.arbre.expression;
 
+import yal.exceptions.AnalyseSemantiqueException;
+
 /**
  * 3 déc. 2015
  *
@@ -19,8 +21,9 @@ public class NonLogique extends Unaire {
 
 	@Override
 	public void verifier() {
-		// TODO Auto-generated method stub
-		
+		if(expression.getTypeCste() != "bool"){
+			throw new AnalyseSemantiqueException("L'expression doit être de type Boolean");
+		}
 	}
 
 	@Override

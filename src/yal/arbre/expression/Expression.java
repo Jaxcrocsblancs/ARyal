@@ -9,6 +9,10 @@ import yal.arbre.ArbreAbstrait;
  */
 
 public abstract class Expression extends ArbreAbstrait {
+	protected String typeCste;
+    public String getTypeCste() {
+		return typeCste;
+	}
     
     protected Expression(int n) {
         super(n) ;
