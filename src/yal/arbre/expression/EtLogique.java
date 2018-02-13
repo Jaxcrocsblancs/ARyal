@@ -1,5 +1,7 @@
 package yal.arbre.expression;
 
+import yal.exceptions.AnalyseSemantiqueException;
+
 /**
  * 3 déc. 2015
  *
@@ -19,7 +21,9 @@ public class EtLogique extends BinaireLogique {
 
 	@Override
 	public void verifier() {
-		// TODO Auto-generated method stub
+		if(!gauche.estBooleen() || !droite.estBooleen()){
+			throw new AnalyseSemantiqueException(this.getNoLigne()," les deux opérandes doivent être booléenne");
+		}
 		
 	}
 
@@ -35,5 +39,4 @@ public class EtLogique extends BinaireLogique {
 		res.append("and $v0, $v0, $t8 \n");
 		return res.toString();
 	}
-
 }

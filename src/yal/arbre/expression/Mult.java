@@ -19,14 +19,7 @@ public class Mult extends BinaireArithmetique {
         return " * ";
     }
 
-	@Override
-	public void verifier() {
-		if(!(gauche.getTypeCste() == "int") || !(droite.getTypeCste() == "int")){
-			throw new AnalyseSemantiqueException("les deux expressions doivents être des entiers");
-		}
-	}
-
-	@Override
+    @Override
 	public String toMIPS() {
 		StringBuilder res = new StringBuilder();
 		res.append(gauche.toMIPS()+ "\n");
@@ -40,5 +33,4 @@ public class Mult extends BinaireArithmetique {
 		res.append("sw $v0, ($sp) \n");
 		return res.toString();
 	}
-
-}
+ }

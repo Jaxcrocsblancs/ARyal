@@ -1,7 +1,6 @@
 package yal.arbre.expression;
 
-import yal.arbre.ArbreAbstrait;
-import yal.exceptions.AnalyseSemantiqueException;
+import yal.arbre.Compteur;
 
 /**
  * 3 déc. 2015
@@ -21,15 +20,8 @@ public class Inferieur extends Comparaison {
     }
 
 	@Override
-	public void verifier() {
-		if(!(gauche.getTypeCste() == "int") || !(droite.getTypeCste() == "int")){
-			throw new AnalyseSemantiqueException("les deux expressions doivents être des entiers");
-		}
-	}
-
-	@Override
 	public String toMIPS() {
-		int no = ArbreAbstrait.getNoCondition();
+		int no = Compteur.getInstance().getNoCondi();
 		StringBuilder res = new StringBuilder();
 		res.append( gauche.toMIPS()+ "\n");
 		res.append( "sw $v0, ($sp) \n");
@@ -49,5 +41,4 @@ public class Inferieur extends Comparaison {
 		res.append("sw $v0, ($sp) \n");
 		return res.toString();
 	}
-    
 }

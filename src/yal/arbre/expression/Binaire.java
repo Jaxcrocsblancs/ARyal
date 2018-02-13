@@ -17,11 +17,19 @@ public abstract class Binaire extends Expression {
         this.droite = droite;
     }
     
+    public void verifier(){
+    
+    }
     public abstract String operateur() ;
 
     @Override
     public String toString() {
         return "(" + gauche + operateur() + droite + ")" ;
     }
+    
+    public abstract boolean estEntier();
+    
+    public abstract boolean estBooleen();
+    
 
 }

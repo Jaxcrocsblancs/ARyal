@@ -9,12 +9,26 @@ import yal.arbre.ArbreAbstrait;
  */
 
 public abstract class Expression extends ArbreAbstrait {
-	protected String typeCste;
-    public String getTypeCste() {
-		return typeCste;
-	}
     
     protected Expression(int n) {
         super(n) ;
     }
+    
+    public abstract boolean estBooleen();
+    
+    public abstract boolean estEntier();   
+    
+    public String getType() {
+    	String res = "";
+    	if(this.estBooleen()) {
+    		res = "booleen";
+    	} else if (this.estEntier()) {
+    		res = "entier";
+    	}
+    	return res;
+    }
+
+	public boolean estConstant() {
+		return false;
+	}
 }

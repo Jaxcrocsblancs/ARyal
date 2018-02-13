@@ -1,8 +1,6 @@
 package yal.arbre.expression;
 
-import yal.arbre.ArbreAbstrait;
-import yal.exceptions.AnalyseSemantiqueException;
-import yal.exceptions.AnalyseSyntaxiqueException;
+import yal.arbre.Compteur;
 
 /**
  * 3 déc. 2015
@@ -22,15 +20,8 @@ public class Different extends Comparaison {
     }
 
 	@Override
-	public void verifier() {
-		if(gauche.getTypeCste() != "bool" || droite.getTypeCste() != "bool"){
-			throw new AnalyseSemantiqueException("Les deux expressions doivent être de type Boolean");
-		}
-	}
-
-	@Override
 	public String toMIPS() {
-		int no = ArbreAbstrait.getNoCondition();
+		int no = Compteur.getInstance().getNoCondi();
 		StringBuilder res = new StringBuilder();
 		res.append(gauche.toMIPS()+ "\n");
 		res.append("sw $v0, ($sp) \n");
@@ -48,8 +39,6 @@ public class Different extends Comparaison {
 		res.append("b Fin"+no + "\n");
 		res.append("Fin"+no+": \n");
 		res.append("sw $v0, ($sp) \n");
-		ArbreAbstrait.setNoCondition();
 		return res.toString();
-	}
-  
+	}  
 }

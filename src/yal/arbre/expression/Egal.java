@@ -1,6 +1,7 @@
 package yal.arbre.expression;
 
-import yal.arbre.ArbreAbstrait;
+import yal.arbre.Compteur;
+
 
 /**
  * 3 déc. 2015
@@ -18,16 +19,10 @@ public class Egal extends Comparaison {
     public String operateur() {
         return " == ";
     }
-
-	@Override
-	public void verifier() {
-		// TODO Auto-generated method stub
-		
-	}
-
+    
 	@Override
 	public String toMIPS() {
-		int no = ArbreAbstrait.getNoCondition();
+		int no = Compteur.getInstance().getNoCondi();
 		StringBuilder res = new StringBuilder();
 		res.append(gauche.toMIPS()+ "\n");
 		res.append("sw $v0, ($sp) \n");
@@ -45,8 +40,6 @@ public class Egal extends Comparaison {
 		res.append("b Fin"+no + "\n");
 		res.append("Fin"+no+": \n");
 		res.append("sw $v0, ($sp) \n");
-		ArbreAbstrait.setNoCondition();
 		return res.toString();
 	}
-    
 }

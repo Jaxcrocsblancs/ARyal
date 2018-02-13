@@ -21,8 +21,8 @@ public class OuLogique extends BinaireLogique {
 
 	@Override
 	public void verifier() {
-		if(gauche.getTypeCste() != "bool" || droite.getTypeCste() != "bool"){
-			throw new AnalyseSemantiqueException("Les deux expressions doivent être de type Boolean");
+		if(!gauche.estBooleen() || !droite.estBooleen()){
+			throw new AnalyseSemantiqueException(this.getNoLigne()," les deux opérandes doivent être booléenne");
 		}
 	}
 

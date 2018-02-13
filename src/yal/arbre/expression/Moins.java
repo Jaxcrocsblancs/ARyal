@@ -20,14 +20,7 @@ public class Moins extends BinaireArithmetique {
     }
 
 	@Override
-	public void verifier() {
-		if(!(gauche.getTypeCste() == "int") || !(droite.getTypeCste() == "int")){
-			throw new AnalyseSemantiqueException("les deux expressions doivents être des entiers");
-		}
-	}
-
-	@Override
-	public String toMIPS() {
+	public String toMIPS() {// probleme ici ou à moins unaire
 		StringBuilder res = new StringBuilder();
 		res.append(gauche.toMIPS()+"\n");
 		res.append("sw $v0, 0($sp) \n");
@@ -39,5 +32,5 @@ public class Moins extends BinaireArithmetique {
 		res.append("sub $v0, $t8, $v0");
 		return res.toString();
 	}
-    
+
 }

@@ -1,19 +1,17 @@
 package yal ;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import yal.analyse.AnalyseurLexical;
 import yal.analyse.AnalyseurSyntaxique;
 import yal.arbre.ArbreAbstrait;
 import yal.exceptions.AnalyseException;
-
-/**
- * 24 mars 2015 
- * 
- * @author brigitte wrobel-dautcourt
- */
 
 public class Yal {
     
@@ -21,14 +19,26 @@ public class Yal {
         try {
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
-            System.err.println("expression stockée dans l'arbre : " + arbre);
+            arbre.verifier();
+            //System.out.println(arbre);
+        	try{
+        		String tfichier = fichier.replace(".yal","");
+    			FileWriter flot = new FileWriter(tfichier+".mips");
+    			BufferedWriter flotFilter = new BufferedWriter(flot);
+    			flotFilter.write(".data\n");
+    	        flotFilter.write("err: .asciiz \"ERREUR EXECUTION\"\n");
+    	        flotFilter.write(".text\n");
+    	        flotFilter.write("main :\n");
+    			flotFilter.write(arbre.toMIPS());
+    			flotFilter.write("\nend : \n");
+    			flotFilter.write("move $v1, $v0 \n");
+    			flotFilter.write("li $v0, 10 \n");
+    			flotFilter.write("fincompil :\n");
+    			flotFilter.write("syscall \n");
+    			flotFilter.close();
+    			System.out.println("COMPILATION OK");
+    		}catch(IOException e){ System.out.println("erreur catch");}
             
-            arbre.verifier() ; 
-            System.out.println(arbre.toMIPS());
-            System.out.println("end : \n");
-            System.out.println("move $v1, $v0 \n");
-            System.out.println("li $v0, 10 \n");
-            System.out.println("syscall \n");
         } 
         catch (FileNotFoundException ex) {
             System.err.println("Fichier " + fichier + " inexistant") ;
@@ -51,3 +61,12 @@ public class Yal {
     }
     
 }
+
+
+
+
+/*** commande utile
+ * java -jar /home/profil/calba5u/Espace-de-depot/projetToucan/java-cup-11a.jar -parser AnalyseurSyntaxique -symbols CodeLexicaux Grammaire.cup
+ * java -jar /home/profil/calba5u/Espace-de-depot/projetToucan/jflex-1.6.1.jar AnalyseurLexical.jflex
+ */
+

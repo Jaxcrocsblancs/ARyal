@@ -21,8 +21,8 @@ public class NonLogique extends Unaire {
 
 	@Override
 	public void verifier() {
-		if(expression.getTypeCste() != "bool"){
-			throw new AnalyseSemantiqueException("L'expression doit être de type Boolean");
+		if(!expression.estBooleen()){
+			throw new AnalyseSemantiqueException(this.getNoLigne()," les deux opérandes doivent être booléenne");
 		}
 	}
 
@@ -34,4 +34,11 @@ public class NonLogique extends Unaire {
 		return res.toString();
 	}
 
+	public boolean estEntier() {
+    	return false;
+    }
+    
+    public boolean estBooleen() {
+    	return true;
+    }
 }

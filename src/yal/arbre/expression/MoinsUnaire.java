@@ -1,5 +1,6 @@
 package yal.arbre.expression;
 
+import yal.arbre.Compteur;
 import yal.exceptions.AnalyseSemantiqueException;
 
 /**
@@ -21,23 +22,24 @@ public class MoinsUnaire extends Unaire {
 
 	@Override
 	public void verifier() {
-		if(!(expression.getTypeCste() == "int") ){
-			throw new AnalyseSemantiqueException("l'expressions doit être un entier");
+		if(!expression.estEntier()) {
+			throw new AnalyseSemantiqueException(this.getNoLigne(),"l'expression doit etre entiere.");
 		}
 	}
 
 	@Override
-	public String toMIPS() {
+	public String toMIPS() {// probleme ici ou à moins 
 		StringBuilder res = new StringBuilder();
-		res.append("li $v0, 0 \n");
-		res.append("sw $v0, ($sp) \n");
-		res.append("addi $sp, $sp, -4 \n");
-		res.append(expression.toMIPS()+ "\n");
-		res.append("addi $sp, $sp, 4 \n");
-		res.append("lw $t8, ($sp) \n");
-		res.append("sub $v0, $t8, $v0 \n");
-		res.append("sw $v0, ($sp) \n");
+		res.append(expression.toMIPS());
+		res.append("\tsub $v0, $zero, $v0\n");
 		return res.toString();
 	}
-
+	
+	public boolean estEntier() {
+    	return true;
+    }
+    
+    public boolean estBooleen() {
+    	return false;
+    }
 }

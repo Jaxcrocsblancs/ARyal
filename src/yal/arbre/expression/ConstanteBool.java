@@ -1,7 +1,5 @@
 package yal.arbre.expression;
 
-import yal.exceptions.AnalyseSemantiqueException;
-
 /**
  * 3 déc. 2015
  *
@@ -16,19 +14,29 @@ public class ConstanteBool extends Constante {
 
 	@Override
 	public void verifier() {
-
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public String toMIPS() {
-		StringBuilder res = new StringBuilder();
-		if(this.cste.equals("vrai")){
-			res.append("li $v0, 1\n");
+		StringBuilder rep = new StringBuilder();
+		if(cste.equals("vrai")) {
+			rep.append("li $v0, 1 \n");
+		} else {
+			rep.append("li $v0, 0 \n");
 		}
-		else if(this.cste.equals("faux")) {
-			res.append("li $v0, 0\n");
-		}
-		return res.toString();
+		return rep.toString();
 	}
 
+	@Override
+	public boolean estEntier() {
+		return false;
+	}
+
+	@Override
+	public boolean estBooleen() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

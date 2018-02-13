@@ -8,7 +8,12 @@ package yal.exceptions;
 
 public class AnalyseSyntaxiqueException extends AnalyseException {
  
-    public AnalyseSyntaxiqueException(String m) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public AnalyseSyntaxiqueException(String m) {
         super("ERREUR SYNTAXIQUE :\n\t" + m) ;
     }
 

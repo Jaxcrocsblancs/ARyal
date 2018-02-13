@@ -21,5 +21,9 @@ public abstract class Unaire extends Expression {
     public String toString() {
         return "(" + operateur() + expression + ")" ;
     }
+    
+    public abstract boolean estEntier();
+    
+    public abstract boolean estBooleen();
 
 }

@@ -8,7 +8,12 @@ package yal.exceptions;
 
 public abstract class AnalyseException extends RuntimeException {
     
-    protected AnalyseException(String m) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	protected AnalyseException(String m) {
         super(m) ;
     }
 

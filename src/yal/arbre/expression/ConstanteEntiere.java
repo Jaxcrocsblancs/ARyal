@@ -14,7 +14,8 @@ public class ConstanteEntiere extends Constante {
 
 	@Override
 	public void verifier() {
-
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -22,6 +23,16 @@ public class ConstanteEntiere extends Constante {
 		StringBuilder res = new StringBuilder();
 		res.append("li $v0,"+this.cste+"\n");
 		return res.toString();
+	}
+
+	@Override
+	public boolean estEntier() {
+		return true;
+	}
+
+	@Override
+	public boolean estBooleen() {
+		return false;
 	}
 
 }

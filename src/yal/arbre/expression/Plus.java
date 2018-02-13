@@ -20,13 +20,6 @@ public class Plus extends BinaireArithmetique {
     }
 
 	@Override
-	public void verifier() {
-		if(!(gauche.getTypeCste() == "int") || !(droite.getTypeCste() == "int")){
-			throw new AnalyseSemantiqueException("les deux expressions doivents être des entiers");
-		}
-	}
-
-	@Override
 	public String toMIPS() {
 		StringBuilder res = new StringBuilder();
 		res.append(gauche.toMIPS()+"\n");
@@ -36,8 +29,7 @@ public class Plus extends BinaireArithmetique {
 		res.append("sw $v0, 0($sp) \n");
 		res.append("add $sp, $sp, 4 \n");
 		res.append("lw $t8, 0($sp) \n");
-		res.append("add $v0, $t8, $v0");
+		res.append("add $v0, $t8, $v0\n ");
 		return res.toString();
 	}
-
 }
