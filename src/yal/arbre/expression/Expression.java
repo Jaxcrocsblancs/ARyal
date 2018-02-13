@@ -17,16 +17,6 @@ public abstract class Expression extends ArbreAbstrait {
     public abstract boolean estBooleen();
     
     public abstract boolean estEntier();   
-    
-    public String getType() {
-    	String res = "";
-    	if(this.estBooleen()) {
-    		res = "booleen";
-    	} else if (this.estEntier()) {
-    		res = "entier";
-    	}
-    	return res;
-    }
 
 	public boolean estConstant() {
 		return false;

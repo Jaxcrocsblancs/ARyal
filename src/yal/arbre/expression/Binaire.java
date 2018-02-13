@@ -27,9 +27,7 @@ public abstract class Binaire extends Expression {
         return "(" + gauche + operateur() + droite + ")" ;
     }
     
-    public abstract boolean estEntier();
-    
-    public abstract boolean estBooleen();
+
     
 
 }

@@ -20,13 +20,15 @@ public class Yal {
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
             arbre.verifier();
-            System.out.println(arbre);
+            System.out.println(arbre.toString());
         	try{
         		String tfichier = fichier.replace(".yal","");
     			FileWriter flot = new FileWriter(tfichier+".mips");
     			BufferedWriter flotFilter = new BufferedWriter(flot);
     			flotFilter.write(".data\n");
     	        flotFilter.write("err: .asciiz \"ERREUR EXECUTION\"\n");
+    	        flotFilter.write("strVrai: .asciiz \" vrai\"\n");
+    	        flotFilter.write("strFaux: .asciiz \" faux\"\n");
     	        flotFilter.write(".text\n");
     	        flotFilter.write("main :\n");
     			flotFilter.write(arbre.toMIPS());
