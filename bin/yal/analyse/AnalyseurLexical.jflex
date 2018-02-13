@@ -44,7 +44,10 @@ chaine = \"[.*\"\"]*.*\"
 "fin"               	{ return symbol(CodesLexicaux.FIN); }
 {idf}				{ return symbol(CodesLexicaux.IDF, yytext()); }
 "ecrire"				{ return symbol(CodesLexicaux.ECRIRE); }
+"entier"				{ return symbol(CodesLexicaux.ENTIER); }
 {chaine}				{ return symbol(CodesLexicaux.CHAINECARACTERE, yytext()); }
+"="                	{ return symbol(CodesLexicaux.EGAL); }
+
 ";"					{ return symbol(CodesLexicaux.POINTVIRGULE); }
 "+"                	{ return symbol(CodesLexicaux.PLUS); }
 "-"                	{ return symbol(CodesLexicaux.MOINS); }

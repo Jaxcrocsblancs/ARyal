@@ -27,8 +27,8 @@ public class Yal {
     			BufferedWriter flotFilter = new BufferedWriter(flot);
     			flotFilter.write(".data\n");
     	        flotFilter.write("err: .asciiz \"ERREUR EXECUTION\"\n");
-    	        flotFilter.write("strVrai: .asciiz \" vrai\"\n");
-    	        flotFilter.write("strFaux: .asciiz \" faux\"\n");
+    	        flotFilter.write("strV: .asciiz \" vrai\"\n");
+    	        flotFilter.write("strF: .asciiz \" faux\"\n");
     	        flotFilter.write(".text\n");
     	        flotFilter.write("main :\n");
     			flotFilter.write(arbre.toMIPS());

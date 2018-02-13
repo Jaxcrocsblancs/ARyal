@@ -13,7 +13,8 @@ public class Compteur {
      
     /** Point d'accès pour l'instance unique du singleton */
     public static Compteur getInstance()
-    {   return INSTANCE;
+    {  
+    	return INSTANCE;
     }
 	
 	public int getNoCondi() {

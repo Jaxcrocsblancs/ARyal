@@ -1,6 +1,5 @@
 package yal.arbre.expression;
 
-import yal.arbre.Compteur;
 import yal.exceptions.AnalyseSemantiqueException;
 
 /**
@@ -28,10 +27,10 @@ public class MoinsUnaire extends Unaire {
 	}
 
 	@Override
-	public String toMIPS() {// probleme ici ou à moins 
+	public String toMIPS() { 
 		StringBuilder res = new StringBuilder();
 		res.append(expression.toMIPS());
-		res.append("\tsub $v0, $zero, $v0\n");
+		res.append("sub $v0, $zero, $v0\n");
 		return res.toString();
 	}
 	

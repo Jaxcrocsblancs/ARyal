@@ -20,7 +20,7 @@ public class Moins extends BinaireArithmetique {
     }
 
 	@Override
-	public String toMIPS() {// probleme ici ou à moins unaire
+	public String toMIPS() {
 		StringBuilder res = new StringBuilder();
 		res.append(gauche.toMIPS()+"\n");
 		res.append("sw $v0, 0($sp) \n");
@@ -29,7 +29,7 @@ public class Moins extends BinaireArithmetique {
 		res.append("sw $v0, 0($sp) \n");
 		res.append("sub $sp, $sp, 4 \n");
 		res.append("lw $t8, 0($sp) \n");
-		res.append("sub $v0, $t8, $v0");
+		res.append("sub $v0, $t8, $v0\n");
 		return res.toString();
 	}
 

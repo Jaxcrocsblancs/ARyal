@@ -4,7 +4,7 @@ import java.util.*;
 import yal.arbre.* ;
 import yal.arbre.expression.* ;
 import yal.exceptions.AnalyseSyntaxiqueException;
-
+import yal.arbre.instruction.*;
 import java_cup.runtime.*;
 
 action code {: 
@@ -66,15 +66,19 @@ parser code {:
    
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    ECRIRE, POINTVIRGULE, PROGRAMME, DEBUT, FIN, PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
-terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON ;
-terminal String    CONSTANTEINT, CONSTANTEBOOL, IDF,CHAINECARACTERE ;
+terminal Symbol    ECRIRE, POINTVIRGULE, PROGRAMME, DEBUT, ENTIER; 
+terminal Symbol    FIN, PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
+terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON, EGAL;
+terminal String    CONSTANTEINT, CONSTANTEBOOL, IDF, CHAINECARACTERE ;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG, INST, ECR;
+non terminal ArbreAbstrait PROG, INST, ECR, AFF;
 non terminal Expression EXPR, CSTE ;
 non terminal BlocDInstructions LINST;
+non terminal TableDesSymboles LDECL;
+non terminal String DECL;
+
 precedence left OU ;
 precedence left ET ;
 precedence left EGALEGAL, DIFF;
@@ -86,28 +90,53 @@ precedence left NON ;
  
 start with PROG ;
 
-PROG    ::= PROGRAMME IDF DEBUT LINST:li FIN
-	       	    {: RESULT = li; :}
-	        ;
+PROG    ::= 	PROGRAMME IDF DEBUT LINST:lin FIN
+	       	    {: RESULT = lin; :}
+	    |
+	     		PROGRAMME IDF DEBUT LDECL:lid LINST:lin FIN
+	        	{: RESULT = lin; :}
+	    ;
     
- LINST	::= LINST:li INST:i
-			{: li.ajouter(i);
-			   RESULT = li; :}
-			|	INST:i
-			{: BlocDInstructions li = new BlocDInstructions(ileft+1);
-			   li.ajouter(i);
-			   RESULT = li; :}
-			;   
+ LINST	::=		LINST:lin INST:i
+				{: lin.ajouter(i);
+				   RESULT = lin; :}
+		|	
+				INST:i
+				{: BlocDInstructions lin = new BlocDInstructions(ileft+1);
+				   lin.ajouter(i);
+				   RESULT = lin; :}
+		;   
 			
-INST	::= ECR:e POINTVIRGULE
-			{: RESULT = e; :}
-			;
-		
-ECR	::= CHAINECARACTERE:c
-		{: RESULT = new EcrireChaineCaractere(cleft+1, c); :}
+INST	::= 	ECR:e POINTVIRGULE
+				{: RESULT = e; :}
 		|
-		EXPR:e
-		{: RESULT = new EcrireExpression(eleft+1, e); :}
+				AFF:a POINTVIRGULE
+				{: RESULT = a; :}
+		;
+			
+LDECL	::=		LDECL:lid DECL:d
+				{: lid.ajouter(d);
+				   RESULT = lid; :}
+		|		DECL:d
+				{: TableDesSymboles lid = TableDesSymboles.getInstance();
+				   lid.ajouter(d);
+				   RESULT = lid; :}
+		;	
+		
+DECL	::= 	IDF:i POINTVIRGULE
+				{: RESULT = i; :}
+ 		;		
+			
+AFF		::= 	IDF:i EGAL EXPR:e
+				{: RESULT = new Affectation(new Variable(ileft+1, i), e, ileft+1); :}
+		;			
+			
+			
+ECR		::= 	CHAINECARACTERE:c
+				{: RESULT = new EcrireChaineCaractere(cleft+1, c); :}
+		|
+				EXPR:e
+				{: RESULT = new EcrireExpression(eleft+1, e); :}
 		|
 		;
             
@@ -152,6 +181,7 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
         |
                 PAROUV  EXPR:e  PARFER
                 {: RESULT = e ; :}
+	
                 ;
 
 CSTE    ::=     CONSTANTEINT:e 
