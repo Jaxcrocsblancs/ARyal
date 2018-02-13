@@ -46,6 +46,7 @@ idf = [a-zA-Z][a-zA-Z0-9]*
 <YYINITIAL>"debut"                	{ return symbol(CodesLexicaux.DEBUT); }
 <YYINITIAL>"fin"                	{ return symbol(CodesLexicaux.FIN); }
 <YYINITIAL>{idf}				{ return symbol(CodesLexicaux.IDF, yytext()); }
+<YYINITIAL>";"					{ return symbol(CodesLexicaux.POINTVIRGULE); }
 <YYINITIAL>"+"                	{ return symbol(CodesLexicaux.PLUS); }
 <YYINITIAL>"-"                	{ return symbol(CodesLexicaux.MOINS); }
 <YYINITIAL>"*"                	{ return symbol(CodesLexicaux.MULT); }

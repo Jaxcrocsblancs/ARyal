@@ -20,7 +20,7 @@ public class Yal {
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
             arbre.verifier();
-            //System.out.println(arbre);
+            System.out.println(arbre);
         	try{
         		String tfichier = fichier.replace(".yal","");
     			FileWriter flot = new FileWriter(tfichier+".mips");

@@ -66,15 +66,15 @@ parser code {:
    
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    PROGRAMME, DEBUT, FIN, PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
+terminal Symbol    POINTVIRGULE, PROGRAMME, DEBUT, FIN, PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
 terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON ;
 terminal String    CONSTANTEINT, CONSTANTEBOOL, IDF;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG ;
+non terminal ArbreAbstrait PROG, INST;
 non terminal Expression EXPR, CSTE ;
-
+non terminal BlocDInstructions LINST;
 precedence left OU ;
 precedence left ET ;
 precedence left EGALEGAL, DIFF;
@@ -86,12 +86,23 @@ precedence left NON ;
  
 start with PROG ;
 
-PROG    ::=    PROGRAMME IDF DEBUT EXPR:e FIN
-                {: BlocDInstructions arbre = new BlocDInstructions(eleft+1) ;
-                   arbre.ajouter(e) ;
-                   RESULT = arbre ; :}
-                ;
+PROG    ::= PROGRAMME IDF DEBUT LINST:li FIN
+	       	    {: RESULT = li; :}
+	        ;
     
+ LINST	::= LINST:li INST:i
+			{: li.ajouter(i);
+			   RESULT = li; :}
+			|	INST:i
+			{: BlocDInstructions li = new BlocDInstructions(ileft+1);
+			   li.ajouter(i);
+			   RESULT = li; :}
+			;   
+			
+INST	::= EXPR:e POINTVIRGULE
+		{: RESULT = e; :}
+		;
+            
 EXPR    ::=     EXPR:g  PLUS  EXPR:d
                 {: RESULT = new Plus(g, d) ; :}
         | 
