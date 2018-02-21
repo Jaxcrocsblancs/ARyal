@@ -19,8 +19,12 @@ public abstract class ArbreAbstrait {
             return noLigne ;
     }
 
-    public abstract void verifier();
+
+	public abstract boolean verifier();
     
     public abstract String toMIPS();
-
+    
+    public void printErreur(String erreur){
+    	System.out.println("ERREUR SEMANTIQUE :\n\tligne " + this.getNoLigne() + "\n\t : " + erreur );
+    }
 }

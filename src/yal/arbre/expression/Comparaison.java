@@ -1,7 +1,5 @@
 package yal.arbre.expression;
 
-import yal.exceptions.AnalyseSemantiqueException;
-
 /**
  * 3 déc. 2015
  *
@@ -23,9 +21,11 @@ public abstract class Comparaison extends Binaire {
     	return true;
     }
 
-	public void verifier() {
+	public boolean verifier() {
 		if((gauche.estEntier() && !droite.estEntier()) || (droite.estEntier() && !gauche.estEntier())) {
-			throw new AnalyseSemantiqueException(this.getNoLigne(), "les deux expressions doivent etre de meme type");
+			printErreur("les deux expressions doivent etre de meme type");
+			return false;
 		}
+		return true;
 	}
 }

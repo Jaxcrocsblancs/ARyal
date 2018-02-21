@@ -18,8 +18,21 @@ public class EcrireChaineCaractere extends Ecrire
 	{
 		int no = Compteur.getInstance().getNoCondi();
 		StringBuilder rep = new StringBuilder();
+		String nChaine= "";
+		nChaine+='"';
+		for (int i=1; i<chaineCaractere.length()-1; i++){
+			if(chaineCaractere.charAt(i)=='"'){
+				nChaine+="\\";
+				nChaine+="\"";
+			}
+			else{
+				nChaine+=chaineCaractere.charAt(i);
+			}
+			
+		}
+		nChaine+='"';
 		rep.append(".data\n");
-		rep.append("str" + no + ": .asciiz " + chaineCaractere + "\n");
+		rep.append("str" + no + ": .asciiz " + nChaine.toString() + "\n");
 		rep.append(".text\n");
 		rep.append("li $v0, 4\n");
 		rep.append("la $a0, str" + no + "\n");
@@ -28,7 +41,8 @@ public class EcrireChaineCaractere extends Ecrire
 	}
 	
 	@Override
-	public void verifier()
+	public boolean verifier()
 	{
+		return true;
 	}
 }

@@ -1,7 +1,5 @@
 package yal.arbre.expression;
 
-import yal.exceptions.AnalyseSemantiqueException;
-
 /**
  * 3 déc. 2015
  *
@@ -14,12 +12,14 @@ public abstract class BinaireArithmetique extends Binaire {
         super(gauche, droite) ;
     }
     
-    public void verifier(){
+    public boolean verifier(){
     	droite.verifier();
 		gauche.verifier();
     	if(!gauche.estEntier() || !droite.estEntier()){
-			throw new AnalyseSemantiqueException(this.getNoLigne()," les deux opérandes doivent être entière");
-		}
+    		printErreur(" les deux opérandes doivent être entière");
+    		return false;
+    	}
+    	return true;
     }
    
     public boolean estEntier() {

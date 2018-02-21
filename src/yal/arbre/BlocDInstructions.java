@@ -29,10 +29,14 @@ public class BlocDInstructions extends ArbreAbstrait {
     }
 
 	@Override
-	public void verifier() {
+	public boolean verifier() {
+		boolean rep = true;
 		for(ArbreAbstrait a : this.expr) {
-			a.verifier();
+			if(a.verifier()==false){
+				rep=false;
+			}
 		}
+		return rep;
 	}
 
 	@Override

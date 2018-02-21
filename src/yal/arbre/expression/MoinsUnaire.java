@@ -1,6 +1,6 @@
 package yal.arbre.expression;
 
-import yal.exceptions.AnalyseSemantiqueException;
+
 
 /**
  * 3 déc. 2015
@@ -20,10 +20,12 @@ public class MoinsUnaire extends Unaire {
     }
 
 	@Override
-	public void verifier() {
+	public boolean verifier() {
 		if(!expression.estEntier()) {
-			throw new AnalyseSemantiqueException(this.getNoLigne(),"l'expression doit etre entiere.");
+			printErreur("l'expression doit etre entiere.");
+			return false;
 		}
+		return true;
 	}
 
 	@Override

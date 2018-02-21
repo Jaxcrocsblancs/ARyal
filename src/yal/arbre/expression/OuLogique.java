@@ -1,7 +1,5 @@
 package yal.arbre.expression;
 
-import yal.exceptions.AnalyseSemantiqueException;
-
 /**
  * 3 déc. 2015
  *
@@ -20,10 +18,12 @@ public class OuLogique extends BinaireLogique {
     }
 
 	@Override
-	public void verifier() {
+	public boolean verifier() {
 		if(!gauche.estBooleen() || !droite.estBooleen()){
-			throw new AnalyseSemantiqueException(this.getNoLigne()," les deux opérandes doivent être booléenne");
+			printErreur(" les deux opérandes doivent être booléenne" );
+			return false;
 		}
+		return true;
 	}
 
 	@Override

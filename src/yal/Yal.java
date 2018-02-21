@@ -19,27 +19,50 @@ public class Yal {
         try {
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(fichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
-            arbre.verifier();
-            System.out.println(arbre.toString());
-        	try{
-        		String tfichier = fichier.replace(".yal","");
-    			FileWriter flot = new FileWriter(tfichier+".mips");
-    			BufferedWriter flotFilter = new BufferedWriter(flot);
-    			flotFilter.write(".data\n");
-    	        flotFilter.write("err: .asciiz \"ERREUR EXECUTION\"\n");
-    	        flotFilter.write("strV: .asciiz \" vrai\"\n");
-    	        flotFilter.write("strF: .asciiz \" faux\"\n");
-    	        flotFilter.write(".text\n");
-    	        flotFilter.write("main :\n");
-    			flotFilter.write(arbre.toMIPS());
-    			flotFilter.write("\nend : \n");
-    			flotFilter.write("move $v1, $v0 \n");
-    			flotFilter.write("li $v0, 10 \n");
-    			flotFilter.write("fincompil :\n");
-    			flotFilter.write("syscall \n");
-    			flotFilter.close();
-    			System.out.println("COMPILATION OK");
-    		}catch(IOException e){ System.out.println("erreur catch");}
+            if(arbre.verifier()){
+	        	try{
+	        		String tfichier = fichier.replace(".yal","");
+	    			FileWriter flot = new FileWriter(tfichier+".mips");
+	    			BufferedWriter flotFilter = new BufferedWriter(flot);
+	    			flotFilter.write(".data\n");
+	    	        flotFilter.write("err: .asciiz \"ERREUR EXECUTION\"\n");
+	    	        flotFilter.write("strV: .asciiz \" vrai\"\n");
+	    	        flotFilter.write("strF: .asciiz \" faux\"\n");
+	    	        flotFilter.write(".text\n");
+	    	        flotFilter.write("main :\n");
+	    			flotFilter.write(arbre.toMIPS());
+	    			flotFilter.write("\nend : \n");
+	    			flotFilter.write("move $v1, $v0 \n");
+	    			flotFilter.write("li $v0, 10 \n");
+	    			flotFilter.write("fincompil :\n");
+	    			flotFilter.write("syscall \n");
+	    			flotFilter.close();
+	    			System.out.println("COMPILATION OK");
+	    		}catch(IOException e){ System.out.println("erreur catch");}
+            }
+            else{
+            	try{
+	        		String tfichier = fichier.replace(".yal","");
+	    			FileWriter flot = new FileWriter(tfichier+".mips");
+	    			BufferedWriter flotFilter = new BufferedWriter(flot);
+	    			flotFilter.write(".data\n");
+	    	        flotFilter.write("err: .asciiz \"ERREUR EXECUTION\"\n");
+	    	        flotFilter.write("strV: .asciiz \" vrai\"\n");
+	    	        flotFilter.write("strF: .asciiz \" faux\"\n");
+	    	        flotFilter.write(".text\n");
+	    	        flotFilter.write("main :\n");
+	    	        flotFilter.write("li $v0, 4\n");
+	    	        flotFilter.write("la $a0, err\n");
+	    	        flotFilter.write("j fincompil\n");
+	    			flotFilter.write("\nend : \n");
+	    			flotFilter.write("move $v1, $v0 \n");
+	    			flotFilter.write("li $v0, 10 \n");
+	    			flotFilter.write("fincompil :\n");
+	    			flotFilter.write("syscall \n");
+	    			flotFilter.close();
+	    			System.out.println("COMPILATION RATE");
+	    		}catch(IOException e){ System.out.println("erreur catch");}
+            }
             
         } 
         catch (FileNotFoundException ex) {

@@ -13,9 +13,8 @@ public class ConstanteEntiere extends Constante {
     }
 
 	@Override
-	public void verifier() {
-		// TODO Auto-generated method stub
-		
+	public boolean verifier() {
+		return true;
 	}
 
 	@Override

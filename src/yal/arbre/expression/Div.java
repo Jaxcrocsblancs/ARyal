@@ -1,10 +1,7 @@
 package yal.arbre.expression;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
 import yal.arbre.Compteur;
-import yal.exceptions.AnalyseSemantiqueException;
+
 
 /**
  * 3 déc. 2015
@@ -24,10 +21,14 @@ public class Div extends BinaireArithmetique {
     }
 
 	@Override
-	public void verifier() {
-		droite.verifier();
-		gauche.verifier();
+	public boolean verifier() {
+		Boolean rep = droite.verifier();
+		if(gauche.verifier()==false){
+			rep = false;
+		}
+		return rep;
 
+		
 	}
 
 	@Override

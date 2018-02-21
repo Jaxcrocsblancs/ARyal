@@ -41,8 +41,8 @@ public class EcrireExpression extends Ecrire
 	}
 	
 	@Override
-	public void verifier()
+	public boolean verifier()
 	{
-		expression.verifier();
+		return expression.verifier();
 	}
 }

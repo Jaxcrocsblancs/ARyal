@@ -1,20 +1,13 @@
 package yal.arbre.expression;
 
-import yal.arbre.Symbole;
 import yal.arbre.TableDesSymboles;
 
-/**
- * @author Fousse Ronan
- * @author Losson Brice
- * @author Collignon Valentin
- * @version 08 Février 2018
- */
 public class Variable extends Expression
 {
 	private String identifiant;
-	private Symbole deplacement;
+	private int deplacement;
 	
-	public Symbole getDeplacement() {
+	public int getDeplacement() {
 		return deplacement;
 	}
 
@@ -23,16 +16,17 @@ public class Variable extends Expression
 		super(n);
 		identifiant = s;
 		deplacement = TableDesSymboles.getInstance().indentifer(identifiant);
+		System.out.println("nom:"+s+" Deplacement: "+deplacement);
 	}
 
-	public void verifier()
+	public boolean verifier()
 	{
-		
+		return true;
 	}
 
 	public String toMIPS()
 	{
-		return "lw $v0, " + deplacement.getDeplacement() + "($s7)\n";
+		return "lw $v0, " + deplacement+ "($s7)\n";
 	}
 
 	public boolean estBooleen() {

@@ -17,12 +17,13 @@ public abstract class Binaire extends Expression {
         this.droite = droite;
     }
     
-    public void verifier(){
-    
+    public boolean verifier(){
+    	return true;
     }
     public abstract String operateur() ;
 
-    @Override
+    
+    
     public String toString() {
         return "(" + gauche + operateur() + droite + ")" ;
     }

@@ -66,14 +66,14 @@ parser code {:
    
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    ECRIRE, POINTVIRGULE, PROGRAMME, DEBUT, ENTIER; 
-terminal Symbol    FIN, PLUS, MOINS, MULT, DIV, PAROUV, PARFER ;
-terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON, EGAL;
+terminal Symbol    ECRIRE, POINTVIRGULE, PROGRAMME, DEBUT, ENTIER, TANTQUE, REPETER, FINTANTQUE; 
+terminal Symbol    FIN, PLUS, MOINS, MULT, DIV, PAROUV, PARFER, SI, ALORS, SINON, FSI;
+terminal Symbol    SUP, INF, EGALEGAL, DIFF, ET, OU, NON, EGAL, LIRE;
 terminal String    CONSTANTEINT, CONSTANTEBOOL, IDF, CHAINECARACTERE ;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG, INST, ECR, AFF;
+non terminal ArbreAbstrait PROG, INST, ECR, AFF, LIR, CON, BOUCLE;
 non terminal Expression EXPR, CSTE ;
 non terminal BlocDInstructions LINST;
 non terminal TableDesSymboles LDECL;
@@ -112,6 +112,15 @@ INST	::= 	ECR:e POINTVIRGULE
 		|
 				AFF:a POINTVIRGULE
 				{: RESULT = a; :}
+		|
+				LIR:l POINTVIRGULE
+				{: RESULT = l; :}
+		|
+				CON:c
+				{: RESULT = c; :}
+		|		
+				BOUCLE:b
+				{: RESULT = b; :}
 		;
 			
 LDECL	::=		LDECL:lid DECL:d
@@ -123,19 +132,34 @@ LDECL	::=		LDECL:lid DECL:d
 				   RESULT = lid; :}
 		;	
 		
-DECL	::= 	IDF:i POINTVIRGULE
+DECL	::= 	ENTIER IDF:i POINTVIRGULE
 				{: RESULT = i; :}
  		;		
+	
+	
+BOUCLE 	::= 	TANTQUE  EXPR:e REPETER  LINST:l FINTANTQUE
+				{: RESULT = new Boucle(e,l,eleft+1); :}	
+		;
+		
+CON     ::= 	SI EXPR:e ALORS LINST:l FSI
+				{: RESULT = new Condition(e,l,null,eleft+1); :}
+		|
+				SI EXPR:e ALORS LINST:l SINON LINST:ls FSI
+				{: RESULT = new Condition(e,l,ls,eleft+1); :}
+		;	
 			
 AFF		::= 	IDF:i EGAL EXPR:e
 				{: RESULT = new Affectation(new Variable(ileft+1, i), e, ileft+1); :}
 		;			
-			
-			
-ECR		::= 	CHAINECARACTERE:c
+		
+LIR		::= 	LIRE IDF:i
+				{: RESULT = new LireExpression(new Variable(ileft+1, i), ileft+1); :}
+		;
+		
+ECR		::= 	ECRIRE CHAINECARACTERE:c
 				{: RESULT = new EcrireChaineCaractere(cleft+1, c); :}
 		|
-				EXPR:e
+				ECRIRE EXPR:e
 				{: RESULT = new EcrireExpression(eleft+1, e); :}
 		|
 		;
@@ -163,10 +187,7 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
         |       
                 EXPR:g  DIFF  EXPR:d
                 {: RESULT = new Different(g, d); :}
-        |                      
-                MOINS  EXPR:e  
-                {: RESULT = new MoinsUnaire(e); :}
-        |      
+        |          
                 EXPR:g  ET  EXPR:d
                 {: RESULT = new EtLogique(g, d); :}
         |      
@@ -175,10 +196,16 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
         |      
                 NON EXPR:e
                 {: RESULT = new NonLogique(e); :}
-        |
+        |            
+                MOINS  EXPR:e  
+                {: RESULT = new MoinsUnaire(e); :}
+        | 
                 CSTE:c
                 {: RESULT = c ; :}
         |
+		        IDF:i
+		        {: RESULT = new Variable(ileft+1, i); :}
+	    |
                 PAROUV  EXPR:e  PARFER
                 {: RESULT = e ; :}
 	
@@ -186,6 +213,7 @@ EXPR    ::=     EXPR:g  PLUS  EXPR:d
 
 CSTE    ::=     CONSTANTEINT:e 
                 {: RESULT = new ConstanteEntiere(e, eleft+1) ; :}
-        |       CONSTANTEBOOL:e 
-                {: RESULT = new ConstanteBool(e, eleft+1) ; :}
-                ;
+        |       
+        		CONSTANTEBOOL:e 
+                {: RESULT = new ConstanteBool(e, eleft+1) ; :} 
+        ;
